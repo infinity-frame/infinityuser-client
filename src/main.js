@@ -125,4 +125,29 @@ const register = async (auth, email, password) => {
   }
 };
 
-export { infinityFetch, initAuth, register, trySignInWithRefreshToken };
+const logout = async (auth) => {
+  try {
+    const response = await fetch(auth.authApiPath + "/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ refreshToken: auth.cookies.get("refreshToken") }),
+    });
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw data;
+    }
+
+    auth.cookies.remove("refreshToken");
+    auth.currentUser = null;
+    auth.accessToken = null;
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { infinityFetch, initAuth, register, trySignInWithRefreshToken, logout };
