@@ -10,7 +10,11 @@
   "keywords": [],
   "author": "InfinityFrame",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "i": "^0.3.7",
+    "npm": "^10.5.0",
+    "universal-cookie": "^7.1.4"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/infinity-frame/infinityuser-client.git"
