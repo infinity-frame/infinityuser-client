@@ -15,11 +15,22 @@ function App() {
     }
   };
 
+  const handleEmailChange = async (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    try {
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     const signIn = async () => {
       try {
         await trySignInWithRefreshToken(auth);
-        console.log(auth.currentUser);
+        console.log(auth);
       } catch (error) {
         console.error(error);
       }
@@ -30,6 +41,7 @@ function App() {
 
   return (
     <>
+      <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Email:
@@ -40,6 +52,19 @@ function App() {
           <input type="password" name="password" required />
         </label>
         <button type="submit">Register</button>
+      </form>
+
+      <h2>Change email</h2>
+      <form onSubmit={handleEmailChange}>
+        <label>
+          Email:
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Password:
+          <input type="password" name="password" required />
+        </label>
+        <button type="submit">Change email</button>
       </form>
     </>
   );
