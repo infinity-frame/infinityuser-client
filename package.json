@@ -4,7 +4,7 @@
   "description": "Simple user management system with JWT authentication",
   "main": "src/main.js",
   "scripts": {
-    "startTest": "cd test && node main.js",
+    "test": "cd test && npm run dev",
     "installTest": "cd test && npm install"
   },
   "keywords": [],

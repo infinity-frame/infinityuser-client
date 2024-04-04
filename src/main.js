@@ -150,4 +150,37 @@ const logout = async (auth) => {
   }
 };
 
-export { infinityFetch, initAuth, register, trySignInWithRefreshToken, logout };
+const changeEmail = async (auth, email, password) => {
+  try {
+    const response = await infinityFetch(
+      auth,
+      auth.authApiPath + "/email",
+      "PUT",
+      {
+        email,
+        password,
+      }
+    );
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw data;
+    }
+
+    auth.currentUser = data;
+    console.log(auth.currentUser);
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export {
+  infinityFetch,
+  initAuth,
+  register,
+  trySignInWithRefreshToken,
+  logout,
+  changeEmail,
+};
