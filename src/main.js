@@ -1,7 +1,7 @@
 import Cookies from "universal-cookie";
 import { jwtDecode } from "jwt-decode";
 
-const infinityFetch = async (auth, path, method, body) => {
+const authFetch = async (auth, path, data) => {
   try {
     if (auth.accessToken) {
       const decodedToken = jwtDecode(auth.accessToken);
@@ -31,22 +31,15 @@ const infinityFetch = async (auth, path, method, body) => {
       }
 
       const response = await fetch(path, {
-        method: method,
+        ...data,
         headers: {
-          "Content-Type": "application/json",
+          ...data.headers,
           Authorization: `Bearer ${auth.accessToken}`,
         },
-        body: JSON.stringify(body),
       });
       return response;
     } else {
-      const response = await fetch(path, {
-        method: method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
+      const response = await fetch(path, data);
       return response;
     }
   } catch (error) {
@@ -152,15 +145,14 @@ const logout = async (auth) => {
 
 const changeEmail = async (auth, email, password) => {
   try {
-    const response = await infinityFetch(
-      auth,
-      auth.authApiPath + "/email",
-      "PUT",
-      {
-        email,
-        password,
-      }
-    );
+    const response = await authFetch(auth, auth.authApiPath + "/email", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
     const data = await response.json();
 
     if (!response.ok) {
@@ -177,7 +169,7 @@ const changeEmail = async (auth, email, password) => {
 };
 
 export {
-  infinityFetch,
+  authFetch,
   initAuth,
   register,
   trySignInWithRefreshToken,
