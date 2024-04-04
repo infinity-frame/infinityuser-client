@@ -4,6 +4,7 @@ import {
   trySignInWithRefreshToken,
   logout,
   changeEmail,
+  login,
 } from "../../src/main";
 import auth from "./config/auth";
 
@@ -40,6 +41,19 @@ function App() {
     try {
       await logout(auth);
       setCurrentUser(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    try {
+      await login(auth, email, password);
+      setCurrentUser(auth.currentUser);
     } catch (error) {
       console.error(error);
     }
@@ -94,6 +108,19 @@ function App() {
               <input type="password" name="password" required />
             </label>
             <button type="submit">Register</button>
+          </form>
+
+          <h2>Login</h2>
+          <form onSubmit={handleLogin}>
+            <label>
+              Email:
+              <input type="email" name="email" required />
+            </label>
+            <label>
+              Password:
+              <input type="password" name="password" required />
+            </label>
+            <button type="submit">Login</button>
           </form>
         </>
       )}

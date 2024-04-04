@@ -168,6 +168,31 @@ const changeEmail = async (auth, email, password) => {
   }
 };
 
+const login = async (auth, email, password) => {
+  try {
+    const response = await fetch(auth.authApiPath + "/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw data;
+    }
+
+    auth.cookies.set("refreshToken", data.refreshToken, { path: "/" });
+    auth.currentUser = data.user;
+    auth.accessToken = data.accessToken;
+
+    return data.user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export {
   authFetch,
   initAuth,
@@ -175,4 +200,5 @@ export {
   trySignInWithRefreshToken,
   logout,
   changeEmail,
+  login,
 };
