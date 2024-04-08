@@ -144,6 +144,17 @@ Attempts to sign in using a refresh token if available.
 const user = await trySignInWithRefreshToken(auth);
 ```
 
+### `changePassword(auth, oldPassword, newPassword)`
+
+Changes the password of the currently authenticated user.
+
+- **Parameters**:
+  - `auth` (object): The authentication object initialized with `initAuth()`.
+  - `oldPassword` (string): The user's current password.
+  - `newPassword` (string): The new password.
+- **Returns**:
+  - The updated user object.
+
 ## Notes
 
 - Make sure to handle errors appropriately using try-catch blocks around these functions to catch any thrown errors.
