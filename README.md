@@ -7,7 +7,7 @@ This package provides utility functions for authentication using refresh tokens 
 You can install this package using npm:
 
 ```bash
-npm install auth-utility-package
+npm install infinity-user-client
 ```
 
 ## Usage
