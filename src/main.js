@@ -9,8 +9,12 @@ const authFetch = async (auth, path, data) => {
 
       if (decodedToken.exp < currentTime) {
         const refreshToken = auth.cookies.get("refreshToken");
+
         if (!refreshToken) {
-          throw new Error("refreshToken is required");
+          throw {
+            code: "auth/refresh-token-missing",
+            message: "Refresh token is missing",
+          };
         }
 
         const response = await fetch(auth.authApiPath + "/refresh", {
@@ -80,7 +84,10 @@ const trySignInWithRefreshToken = async (auth) => {
 
 const initAuth = ({ authApiPath }) => {
   if (!authApiPath) {
-    throw new Error("authApiPath is required");
+    throw {
+      code: "auth/missing-auth-api-path",
+      message: "Auth API path is missing",
+    };
   }
 
   const cookies = new Cookies();
