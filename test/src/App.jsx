@@ -5,6 +5,7 @@ import {
   logout,
   changeEmail,
   login,
+  changePassword,
 } from "../../src/main";
 import auth from "./config/auth";
 
@@ -59,6 +60,19 @@ function App() {
     }
   };
 
+  const handlePasswordChange = async (event) => {
+    event.preventDefault();
+    const currentPassword = event.target.currentPassword.value;
+    const newPassword = event.target.newPassword.value;
+
+    try {
+      await changePassword(auth, currentPassword, newPassword);
+      setCurrentUser(auth.currentUser);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     const signIn = async () => {
       try {
@@ -87,6 +101,19 @@ function App() {
               <input type="password" name="password" required />
             </label>
             <button type="submit">Change email</button>
+          </form>
+
+          <h2>Change password</h2>
+          <form onSubmit={handlePasswordChange}>
+            <label>
+              Current password:
+              <input type="password" name="currentPassword" required />
+            </label>
+            <label>
+              New password:
+              <input type="password" name="newPassword" required />
+            </label>
+            <button type="submit">Change password</button>
           </form>
 
           <h2>Logout</h2>

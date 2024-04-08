@@ -200,6 +200,28 @@ const login = async (auth, email, password) => {
   }
 };
 
+const changePassword = async (auth, oldPassword, newPassword) => {
+  try {
+    const response = await authFetch(auth, auth.authApiPath + "/password", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ password: oldPassword, newPassword }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw data;
+    }
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export {
   authFetch,
   initAuth,
@@ -208,4 +230,5 @@ export {
   logout,
   changeEmail,
   login,
+  changePassword,
 };
