@@ -1,5 +1,5 @@
 {
-  "name": "infinityuser-client",
+  "name": "@infinity-frame/infinityuser-client",
   "version": "1.0.0",
   "description": "Simple user management system with JWT authentication",
   "main": "src/main.js",
@@ -19,5 +19,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/infinity-frame/infinityuser-client.git"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
